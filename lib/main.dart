@@ -4,23 +4,31 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
+void main() => runApp(MyApp());
+
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return MyAppState();
+  }
 }
 
-class MyApp extends StatelessWidget {
+class MyAppState extends State<MyApp> {
+  int count = 0;
+  void answerQuestion() {
+    setState(() {
+      count++;
+    });
+    print('This is your answer count = ' + count.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
-    int count = 0;
-
-    void answerQuestion() {
-      ++count;
-      print('This is your answer count = ' + count.toString());
-    }
-
     List<String> questions = [
       'What\'s your favorite book?',
-      'What\'s your favorite fish?'
+      'What\'s your favorite fish?',
+      'What\'s your favorite girl?'
     ];
 
     return MaterialApp(
@@ -32,7 +40,7 @@ class MyApp extends StatelessWidget {
         ),
         body: Column(
           children: <Widget>[
-            Text(questions[1]),
+            Text(questions[count]),
             RaisedButton(
               child: Text('Answer 1'),
               onPressed: answerQuestion,
