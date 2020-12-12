@@ -1,11 +1,10 @@
 //import 'dart:html';
 
-import 'dart:ffi';
+//import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import './question.dart';
 import './answer.dart';
-
 
 void main() => runApp(MyApp());
 
@@ -19,6 +18,7 @@ class MyApp extends StatefulWidget {
 
 class MyAppState extends State<MyApp> {
   int count = 0;
+
   void answerQuestion() {
     setState(() {
       count++;
@@ -28,28 +28,37 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> questions = [
-      'What\'s your favorite book?',
-      'What\'s your favorite fish?',
-      'What\'s your favorite girl?'
+    var questions = [
+      {
+        'questionText': 'What\'s your favorite book?',
+        'answers': ['Tikhiy Don', 'Azbuka', 'Idiot', 'Karamazovs brothers']
+      },
+      {
+        'questionText': 'What\'s your favorite fish?',
+        'answers': ['Sudak', 'Okun', 'Schuka', 'Omul']
+      },
+      {
+        'questionText': 'What\'s your favorite girl?',
+        'answers': ['Tatnia', 'Tina', 'Tuka', 'Titka']
+      }
     ];
 
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Title',
+          appBar: AppBar(
+            title: Text(
+              'Title',
+            ),
           ),
-        ),
-        body: Column(
-          children: <Widget>[
-            Question(questions[count]),
-            Answer(answerQuestion),
-            Answer(answerQuestion),
-            Answer(answerQuestion)
-          ],
-        ),
-      ),
+          body: Column(
+              children: <Widget>[
+          Question(questions[count]['questionText']),
+          ...(questions[count]['answers'] as List<String>).map((answer) {
+        return Answer(answerQuestion, answer);
+      }).toList();
+      ],
+    ),)
+    ,
     );
   }
 }
