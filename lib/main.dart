@@ -3,8 +3,9 @@
 //import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import './question.dart';
-import './answer.dart';
+import './quiz.dart';
+import './finalPage.dart';
+//import './answer.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,7 +20,7 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   int count = 0;
 
-  void answerQuestion() {
+  void _answerQuestion() {
     setState(() {
       count++;
     });
@@ -28,7 +29,7 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
+    const questions = [
       {
         'questionText': 'What\'s your favorite book?',
         'answers': ['Tikhiy Don', 'Azbuka', 'Idiot', 'Karamazovs brothers']
@@ -50,15 +51,10 @@ class MyAppState extends State<MyApp> {
               'Title',
             ),
           ),
-          body: Column(
-              children: <Widget>[
-          Question(questions[count]['questionText']),
-          ...(questions[count]['answers'] as List<String>).map((answer) {
-        return Answer(answerQuestion, answer);
-      }).toList();
-      ],
-    ),)
-    ,
+          body: count < questions.length
+              ? Quiz(count: count, answerQuestion: _answerQuestion, questions: questions)
+              : FinalPage()
+      ),
     );
   }
 }
